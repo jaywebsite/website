@@ -103,13 +103,18 @@ const bgMusic = document.getElementById('bg-music');
 
 function overlayPlay() {
   const overlay = document.getElementById('music-overlay');
-  overlay.classList.add('hide');
-  setTimeout(() => overlay.style.display = 'none', 600);
+  const vinyl   = document.getElementById('overlay-vinyl');
 
   if (!bgMusic) return;
   bgMusic.volume = 0.4;
   bgMusic.play().then(() => {
     musicPlaying = true;
+    // Spin the vinyl
+    if (vinyl) vinyl.style.animationPlayState = 'running';
+    // Fade out overlay
+    overlay.classList.add('hide');
+    setTimeout(() => overlay.style.display = 'none', 800);
+    // Update toggle button
     document.getElementById('music-btn').classList.add('playing');
     document.getElementById('music-label').textContent = '♪ wave to earth - love';
   }).catch(() => {});
