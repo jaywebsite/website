@@ -96,3 +96,55 @@ if (titleEl) {
     titleEl.innerHTML = texts[i];
   }, 3000);
 }
+
+// ===== BACKGROUND MUSIC =====
+let musicPlaying = false;
+const bgMusic = document.getElementById('bg-music');
+
+function startMusic() {
+  if (!bgMusic) return;
+  bgMusic.volume = 0.4;
+  bgMusic.play().then(() => {
+    musicPlaying = true;
+    document.getElementById('music-btn').classList.add('playing');
+    document.getElementById('music-icon').className = 'fas fa-music';
+    document.getElementById('music-label').textContent = '♪ wave to earth - love';
+  }).catch(() => {
+    // Browser blocked autoplay — wait for first click
+    document.addEventListener('click', function retry() {
+      bgMusic.play().then(() => {
+        musicPlaying = true;
+        document.getElementById('music-btn').classList.add('playing');
+        document.getElementById('music-label').textContent = '♪ wave to earth - love';
+      }).catch(() => {});
+      document.removeEventListener('click', retry);
+    }, { once: true });
+  });
+}
+
+// Try autoplay right away
+window.addEventListener('load', startMusic);
+
+function toggleMusic() {
+  const btn   = document.getElementById('music-btn');
+  const icon  = document.getElementById('music-icon');
+  const label = document.getElementById('music-label');
+
+  if (!bgMusic) return;
+
+  if (musicPlaying) {
+    bgMusic.pause();
+    btn.classList.remove('playing');
+    btn.classList.add('paused');
+    icon.className = 'fas fa-pause';
+    label.textContent = '♪ Paused';
+    musicPlaying = false;
+  } else {
+    bgMusic.play();
+    btn.classList.remove('paused');
+    btn.classList.add('playing');
+    icon.className = 'fas fa-music';
+    label.textContent = '♪ wave to earth - love';
+    musicPlaying = true;
+  }
+}
