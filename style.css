@@ -895,17 +895,16 @@ footer       { background: rgba(10, 10, 10, 0.92) !important; }
   justify-content: center;
   cursor: pointer;
   transition: opacity 0.8s ease;
+  background: rgba(0, 0, 0, 0.96);
 }
 
 #overlay-bg {
   position: absolute;
   inset: 0;
-  background: #000;
-  background-image: url('background.jpg.jpg');
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.25) blur(4px);
-  transform: scale(1.05);
+  background: #000 url('background.jpg.jpg') center center / cover no-repeat;
+  filter: brightness(0.15) blur(8px);
+  transform: scale(1.1);
+  z-index: 0;
 }
 
 #music-overlay.hide {
@@ -915,7 +914,7 @@ footer       { background: rgba(10, 10, 10, 0.92) !important; }
 
 #overlay-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
