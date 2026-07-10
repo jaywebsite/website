@@ -109,12 +109,14 @@ function overlayPlay() {
   bgMusic.volume = 0.4;
   bgMusic.play().then(() => {
     musicPlaying = true;
-    // Spin the vinyl
     if (vinyl) vinyl.style.animationPlayState = 'running';
-    // Fade out overlay
     overlay.classList.add('hide');
-    setTimeout(() => overlay.style.display = 'none', 800);
-    // Update toggle button
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      // Push polaroids back behind content
+      const pb = document.querySelector('.polaroid-bg');
+      if (pb) pb.style.zIndex = '-1';
+    }, 800);
     document.getElementById('music-btn').classList.add('playing');
     document.getElementById('music-label').textContent = '♪ wave to earth - love';
   }).catch(() => {});
