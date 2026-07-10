@@ -185,13 +185,22 @@
     <button id="music-btn" onclick="toggleMusic()" title="Toggle Music">
       <i class="fas fa-music" id="music-icon"></i>
     </button>
-    <span id="music-label">♪ wave to earth - love</span>
+    <span id="music-label">♪ Click to play music</span>
   </div>
 
   <!-- HTML5 Audio -->
-  <audio id="bg-music" loop>
+  <audio id="bg-music" loop preload="auto">
     <source src="music.mp3" type="audio/mpeg">
   </audio>
+
+  <!-- Autoplay prompt overlay -->
+  <div id="music-overlay" onclick="overlayPlay()">
+    <div id="music-overlay-box">
+      <div id="music-overlay-icon"><i class="fas fa-music"></i></div>
+      <p>wave to earth — love</p>
+      <span>Click anywhere to enter</span>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

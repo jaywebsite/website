@@ -101,8 +101,12 @@ if (titleEl) {
 let musicPlaying = false;
 const bgMusic = document.getElementById('bg-music');
 
-function startMusic() {
-  if (!bgMusic || musicPlaying) return;
+function overlayPlay() {
+  const overlay = document.getElementById('music-overlay');
+  overlay.classList.add('hide');
+  setTimeout(() => overlay.style.display = 'none', 600);
+
+  if (!bgMusic) return;
   bgMusic.volume = 0.4;
   bgMusic.play().then(() => {
     musicPlaying = true;
@@ -110,20 +114,6 @@ function startMusic() {
     document.getElementById('music-label').textContent = '♪ wave to earth - love';
   }).catch(() => {});
 }
-
-// Try autoplay immediately
-window.addEventListener('load', () => {
-  startMusic();
-  // Fallback: start on first user interaction
-  ['click','touchstart','keydown','scroll'].forEach(evt => {
-    document.addEventListener(evt, function handler() {
-      startMusic();
-      ['click','touchstart','keydown','scroll'].forEach(e =>
-        document.removeEventListener(e, handler)
-      );
-    }, { once: true });
-  });
-});
 
 function toggleMusic() {
   const btn   = document.getElementById('music-btn');
