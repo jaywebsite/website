@@ -102,28 +102,28 @@ let musicPlaying = false;
 const bgMusic = document.getElementById('bg-music');
 
 function startMusic() {
-  if (!bgMusic) return;
+  if (!bgMusic || musicPlaying) return;
   bgMusic.volume = 0.4;
   bgMusic.play().then(() => {
     musicPlaying = true;
     document.getElementById('music-btn').classList.add('playing');
-    document.getElementById('music-icon').className = 'fas fa-music';
     document.getElementById('music-label').textContent = '♪ wave to earth - love';
-  }).catch(() => {
-    // Browser blocked autoplay — wait for first click
-    document.addEventListener('click', function retry() {
-      bgMusic.play().then(() => {
-        musicPlaying = true;
-        document.getElementById('music-btn').classList.add('playing');
-        document.getElementById('music-label').textContent = '♪ wave to earth - love';
-      }).catch(() => {});
-      document.removeEventListener('click', retry);
-    }, { once: true });
-  });
+  }).catch(() => {});
 }
 
-// Try autoplay right away
-window.addEventListener('load', startMusic);
+// Try autoplay immediately
+window.addEventListener('load', () => {
+  startMusic();
+  // Fallback: start on first user interaction
+  ['click','touchstart','keydown','scroll'].forEach(evt => {
+    document.addEventListener(evt, function handler() {
+      startMusic();
+      ['click','touchstart','keydown','scroll'].forEach(e =>
+        document.removeEventListener(e, handler)
+      );
+    }, { once: true });
+  });
+});
 
 function toggleMusic() {
   const btn   = document.getElementById('music-btn');
