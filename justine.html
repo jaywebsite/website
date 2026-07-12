@@ -88,7 +88,12 @@ window.onerror = function(msg, src, line, col, err) {
   document.body.appendChild(d);
 };
 </script>
-<script src="three-bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+  // make OrbitControls available as window.OrbitControls
+  if(window.THREE && THREE.OrbitControls) window.OrbitControls = THREE.OrbitControls;
+</script>
 <script>
 // ── VERIFY THREE LOADED ───────────────────────────────────────────
 if(!window.THREE || !window.THREE.Scene){
